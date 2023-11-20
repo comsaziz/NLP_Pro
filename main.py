@@ -13,9 +13,6 @@ documents = [
 # Define the dictionary (7 words)
 dictionary = ["Application", "Vaccination", "Covid", "Pilgrims", "Health", "Certificate", "Center"]
 
-# Manually provided IDF values
-idf_values = [0.6020599, 0.1249387, 0.6020599, 0.6020599, 0.6020599, 0.6020599, 0.6020599]
-
 # Calculate TF values
 tf_matrix = np.zeros((len(documents), len(dictionary)))
 for i, doc in enumerate(documents):
@@ -27,10 +24,11 @@ TF = pd.DataFrame(data=tf_matrix, columns=dictionary)
 print("TF values:")
 print(TF)
 
-# Use manually provided IDF values
-idf_vector = np.array(idf_values)
+# Calculate IDF values
+total_documents = len(documents)
+idf_vector = np.log(total_documents / (1 + np.count_nonzero(tf_matrix, axis=0)))
 
-# Display the IDF values
+# Display the calculated IDF values
 print("\nIDF values:")
 print(idf_vector)
 
