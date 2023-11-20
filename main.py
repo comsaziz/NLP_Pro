@@ -2,16 +2,28 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 import pandas as pd
 import numpy as np
 
-# Define the documents
+# # Define the documents
+# documents = [
+#     "Data Base System Concepts",
+#     "Introduction to Algorithms",
+#     "Computer Geometry Application",
+#     "Data Structure and Algorithm Analysis on Data"
+# ]
+
+# # Define the dictionary (7 words)
+# dictionary = ["Data", "System", "Algorithm", "Computer", "Geometry", "Structure", "Analysis"]
+
+# Given documents
 documents = [
-    "Vaccination Applications",
+    "Vaccination Application",
     "Covid Vaccination Center",
     "Health of Pilgrims",
     "Certificate of Vaccination"
 ]
 
-# Define the dictionary (7 words)
+# Given dictionary
 dictionary = ["Application", "Vaccination", "Covid", "Pilgrims", "Health", "Certificate", "Center"]
+
 
 # Calculate TF values
 tf_matrix = np.zeros((len(documents), len(dictionary)))
@@ -20,19 +32,18 @@ for i, doc in enumerate(documents):
         tf_matrix[i, j] = doc.count(word) / len(doc.split())
 
 # Display the TF values as a DataFrame
-TF = pd.DataFrame(data=tf_matrix, columns=dictionary)
+tf_df = pd.DataFrame(data=tf_matrix, columns=dictionary)
 print("TF values:")
-print(TF)
+print(tf_df)
 
 # Calculate IDF values
 total_documents = len(documents)
-df_vector = np.count_nonzero(tf_matrix, axis=0)
-idf_vector = np.log(total_documents / (1 + df_vector))
+idf_vector = np.log2(total_documents / np.count_nonzero(tf_matrix, axis=0))
 
-# Display the corrected IDF values
-idf_values_dict = dict(zip(dictionary, idf_vector))
-for word, idf_value in idf_values_dict.items():
-    print(f"IDF({word}) ≈ {idf_value:.7f}")
+# Display the IDF values as a DataFrame
+idf_df = pd.DataFrame(data={'IDF': idf_vector}, index=dictionary)
+print("\nIDF values:")
+print(idf_df)
 
 # Calculate TF-IDF values
 tfidf_matrix = tf_matrix * idf_vector
