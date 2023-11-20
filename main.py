@@ -26,11 +26,13 @@ print(TF)
 
 # Calculate IDF values
 total_documents = len(documents)
-idf_vector = np.log(total_documents / (1 + np.count_nonzero(tf_matrix, axis=0)))
+df_vector = np.count_nonzero(tf_matrix, axis=0)
+idf_vector = np.log(total_documents / (1 + df_vector))
 
-# Display the calculated IDF values
-print("\nIDF values:")
-print(idf_vector)
+# Display the corrected IDF values
+idf_values_dict = dict(zip(dictionary, idf_vector))
+for word, idf_value in idf_values_dict.items():
+    print(f"IDF({word}) ≈ {idf_value:.7f}")
 
 # Calculate TF-IDF values
 tfidf_matrix = tf_matrix * idf_vector
