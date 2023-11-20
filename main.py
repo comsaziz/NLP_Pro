@@ -4,14 +4,17 @@ import numpy as np
 
 # Define the documents
 documents = [
-    "Data Base System Concepts",
-    "Introduction to Algorithms",
-    "Computer Geometry Application",
-    "Data Structure and Algorithm Analysis on Data"
+    "Vaccination Applications",
+    "Covid Vaccination Center",
+    "Health of Pilgrims",
+    "Certificate of Vaccination"
 ]
 
 # Define the dictionary (7 words)
-dictionary = ["Data", "System", "Algorithm", "Computer", "Geometry", "Structure", "Analysis"]
+dictionary = ["Application", "Vaccination", "Covid", "Pilgrims", "Health", "Certificate", "Center"]
+
+# Manually provided IDF values
+idf_values = [0.6020599, 0.1249387, 0.6020599, 0.6020599, 0.6020599, 0.6020599, 0.6020599]
 
 # Calculate TF values
 tf_matrix = np.zeros((len(documents), len(dictionary)))
@@ -20,18 +23,16 @@ for i, doc in enumerate(documents):
         tf_matrix[i, j] = doc.count(word) / len(doc.split())
 
 # Display the TF values as a DataFrame
-tf_df = pd.DataFrame(data=tf_matrix, columns=dictionary)
+TF = pd.DataFrame(data=tf_matrix, columns=dictionary)
 print("TF values:")
-print(tf_df)
+print(TF)
 
-# Calculate IDF values
-total_documents = len(documents)
-idf_vector = np.log2(total_documents / np.count_nonzero(tf_matrix, axis=0))
+# Use manually provided IDF values
+idf_vector = np.array(idf_values)
 
-# Display the IDF values as a DataFrame
-idf_df = pd.DataFrame(data={'IDF': idf_vector}, index=dictionary)
+# Display the IDF values
 print("\nIDF values:")
-print(idf_df)
+print(idf_vector)
 
 # Calculate TF-IDF values
 tfidf_matrix = tf_matrix * idf_vector
