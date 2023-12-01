@@ -48,6 +48,16 @@ tfidf_df = pd.DataFrame(data=tfidf_matrix, columns=dictionary_lower)
 print("\nTF-IDF values:")
 print(tfidf_df)
 
+
+
+
+#------Start of Nomalized code section
+
+
+
+
+
+
 # Normalize TF-IDF values
 tfidf_norm = np.linalg.norm(tfidf_matrix, axis=1, keepdims=True)
 tfidf_matrix /= tfidf_norm
@@ -55,7 +65,7 @@ tfidf_matrix /= tfidf_norm
 
 
 
-#------Start of Nomalized code section
+
 
 
 # Display the normalized TF-IDF values as a DataFrame
