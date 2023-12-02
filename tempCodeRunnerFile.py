@@ -4,15 +4,13 @@ import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 
 documents = [
-    "Vaccination Application",
-    "Covid Vaccination Center",
-    "Health of Pilgrims",
-    "Certificate of Vaccination"
+    "Data Base System Concepts",
+    "Introduction to Algorithms",
+    "Computer Geometry Application",
+    "Data Structure and Algorithm Analysis on Data"
 ]
 
-
-dictionary = ["Application", "Vaccination", "Covid", "Pilgrims", "Health", "Certificate", "Center"]
-
+dictionary = ["data", "system", "algorithm", "computer", "geometry", "structure", "analysis"]
 
 documents_lower = [doc.lower() for doc in documents]
 dictionary_lower = [word.lower() for word in dictionary]
@@ -46,7 +44,7 @@ tfidf_df_normalized = pd.DataFrame(data=tfidf_matrix, columns=dictionary_lower)
 print("\nNormalized TF-IDF values:")
 print(tfidf_df_normalized)
 
-query = "Covid Vaccination"
+query = "Data Analysis"
 query_lower = query.lower()
 
 query_tf = np.zeros((1, len(dictionary_lower)))
@@ -65,5 +63,5 @@ result_df = pd.DataFrame(data={'Document': documents, 'Cosine Similarity Score':
 
 result_df['Rank'] = result_df['Cosine Similarity Score'].rank(ascending=False)
 
-print("\nRanked Results for the Query 'Covid Vaccination':")
+print("\nRanked Results for the Query 'Data Analysis':")
 print(result_df.sort_values(by='Rank'))
